@@ -14,6 +14,6 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 	- Type: READ | Write
 	- Valid inputs: any
 	- Description: A user can start or restart the game using this characteristic by inputting any character.
-![Service](documentation/service.PNG)
+![Service](documentation/service.PNG = 100 * 200)
 
-## 
+##
