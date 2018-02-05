@@ -8,6 +8,7 @@ For this week's assignment, I come up with an idea of makeing a tic-tac-toe game
 ## Service, characteristics and UUIDs
 As mentioned above, the service, characteristics and UUIDs are as the following:
 - Service: TICTACTOE; UUID: FF20
+	- This is basically a game service, of tic-tac-toe, as described above
 - Characteristic 1: MOVE; UUID: FF21
 	- Type: Read | Write
 	- Valid inputs: A0, A1, A2, B0, B1, B2, C0, C1, C2
@@ -16,7 +17,7 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 	- Type: READ | Write
 	- Valid inputs: any
 	- Description: A user can start or restart the game using this characteristic by inputting any character.
-<img src="documentation/console.jpeg" align="center" alt="Service" width="400"/>
-<img src="documentation/service.jpeg" align="center" alt="Service" width="350"/>
+<img src="documentation/console.jpeg" align="center" alt="Service" width="100" display="inline-block"/>
+<img src="documentation/service.jpeg" align="center" alt="Service" width="100" display="inline-block"/>
 
-##
+## Schematics
