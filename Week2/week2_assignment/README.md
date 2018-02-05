@@ -25,3 +25,8 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 one with the wires connecting with the arduino 101, one without, so it might be less messy. The basic idea is connect the ground of all the LEDs together, and connect each positive end of the LEDs to all the arduino pins*
 <img src="documentation/graph_1.png" alt="graph1">
 <img src="documentation/graph_2.png" alt="graph2">
+
+## Some thoughts and possible improvement
+For this project, the codes and the implementation of Bluetooth LE are quite straight forward to me. However, what bothers me the most is the routing of wires. The board for tic-tac-toe implementing by LEDs makes designing and building on breadboard very complicated and time consuming. The original plan was to use RGB leds, but those are out of storage at ITP. Also, maybe using something like a LED matrix could be better.
+
+What's more, I thought about adding some notifications for my peripheral, such as sending the information of the status, like game results and winner to the phones. However, to make the notifications make more sense, the messages should be something like a string... but I wasn't able to figure out how to acheive that.
