@@ -9,14 +9,20 @@ int values[9] = {160, 161, 162, 176, 177, 178, 192, 193, 194};
 
 // status
 int state = 0; // 0 being standing-by, 1 being in-game
+// msg to notify
+int msg = 0; // 0 being standing-by, 1 being in-game, 2 being player win, 3 being computer win, 4 being draw
 
 // setting up peripheral, services and descriptors
 BLEPeripheral blePeripheral;
 BLEService gameService = BLEService("FF20");
 BLEUnsignedCharCharacteristic moveCharacteristic = BLEUnsignedCharCharacteristic("FF21", BLERead | BLEWrite);
 BLEUnsignedCharCharacteristic startCharacteristic = BLEUnsignedCharCharacteristic("FF22", BLERead | BLEWrite);
+BLEIntCharacteristic statusCharacteristic = BLEIntCharacteristic("FF23", BLERead | BLENotify);
+BLEIntCharacteristic computerMoveCharacteristic = BLEIntCharacteristic("FF24", BLERead | BLENotify);
 BLEDescriptor moveDescriptor = BLEDescriptor("2901", "Move");
 BLEDescriptor startDescriptor = BLEDescriptor("2901", "(Re)start");
+BLEDescriptor statusDescriptor = BLEDescriptor("2901", "Status");
+BLEDescriptor computerDescriptor = BLEDescriptor("2901", "ComputerMove");
 
 void setup() {
   Serial.begin(9600);
@@ -45,12 +51,18 @@ void setup() {
   blePeripheral.addAttribute(moveDescriptor);
   blePeripheral.addAttribute(startCharacteristic);
   blePeripheral.addAttribute(startDescriptor);
+  blePeripheral.addAttribute(statusCharacteristic);
+  blePeripheral.addAttribute(statusDescriptor);
+  blePeripheral.addAttribute(computerMoveCharacteristic);
+  blePeripheral.addAttribute(computerDescriptor);
 
   moveCharacteristic.setEventHandler(BLEWritten, moveCharacteristicWritten);
   startCharacteristic.setEventHandler(BLEWritten, startCharacteristicWritten);
 
   blePeripheral.setAdvertisedServiceUuid(gameService.uuid());
   blePeripheral.begin();
+  statusCharacteristic.setValue(msg);
+  computerMoveCharacteristic.setValue(0);
 }
 
 void loop() {
@@ -59,9 +71,11 @@ void loop() {
 
 void startCharacteristicWritten(BLECentral&central, BLECharacteristic&characteristic) {
   // plays and resets the LEDs, and also revert the state
+  msg = 1;
+  computerMoveCharacteristic.setValue(0);
   gameDisplay();
-  if (state == 0){
-    state = 1;  
+  if (state == 0) {
+    state = 1;
   }
 }
 
@@ -101,6 +115,7 @@ void computerMove() {
       if (matrix[pos] == 0) {
         matrix[pos] = 2;
         indexToPinMapper(pos, 1);
+        computerMoveCharacteristic.setValue(values[pos]);
         Serial.print(F("Computer moved: "));
         Serial.println(values[pos], HEX);
         resultInspector();
@@ -153,8 +168,10 @@ void resultInspector() {
       if (matrix[i] != 0 && matrix[i] == matrix[i + 1] && matrix[i + 1] == matrix[i + 2]) {
         // game ends
         if (matrix[i] == 1) {
+          msg = 2;
           Serial.println("Player wins!");
         } else {
+          msg = 3;
           Serial.println("Computer wins!");
         }
         gameDisplay();
@@ -166,8 +183,10 @@ void resultInspector() {
       if (matrix[i] != 0 && matrix[i] == matrix[i + 3] && matrix[i + 3] == matrix[i + 6]) {
         // game ends
         if (matrix[i] == 1) {
+          msg = 2;
           Serial.println("Player wins!");
         } else {
+          msg = 3;
           Serial.println("Computer wins!");
         }
         gameDisplay();
@@ -178,8 +197,10 @@ void resultInspector() {
     if (matrix[0] != 0 && matrix[0] == matrix[4] && matrix[4] == matrix[8]) {
       // game ends
       if (matrix[0] == 1) {
+        msg = 2;
         Serial.println("Player wins!");
       } else {
+        msg = 3;
         Serial.println("Computer wins!");
       }
       gameDisplay();
@@ -187,8 +208,10 @@ void resultInspector() {
     }
     else if (matrix[2] != 0 && matrix[2] == matrix[4] && matrix[4] == matrix[6]) {
       if (matrix[2] == 1) {
+        msg = 2;
         Serial.println("Player wins!");
       } else {
+        msg = 3;
         Serial.println("Computer wins!");
       }
       gameDisplay();
@@ -200,6 +223,7 @@ void resultInspector() {
         return;
       }
     }
+    msg = 4;
     Serial.println("Draw!");
     gameDisplay();
   } else {
@@ -208,6 +232,9 @@ void resultInspector() {
 }
 
 void gameDisplay() {
+  long previousMillis = millis();
+  int i = 0;
+  statusCharacteristic.setValue(msg);
   for (int i = 2; i <= 13; i++) {
     digitalWrite(i, LOW);
   }
@@ -217,12 +244,16 @@ void gameDisplay() {
   analogWrite(A3, 0);
   analogWrite(A4, 0);
   analogWrite(A5, 0);
-  for (int i = 0; i < 9; i++) {
-    matrix[i] = 0;
-    indexToPinMapper(i, 0);
-    delay(200);
-    indexToPinMapper(i, 1);
-    delay(200);
+  while (i < 9) {
+    if (millis() - previousMillis == 100) {
+      matrix[i] = 0;
+      indexToPinMapper(i, 0);
+    }
+    if (millis() - previousMillis == 200) {
+      indexToPinMapper(i, 1);
+      previousMillis = millis();
+      i++;
+    }
   }
   for (int i = 2; i <= 13; i++) {
     digitalWrite(i, LOW);
