@@ -4,10 +4,6 @@
 For this week's assignment, I continued with an idea of making the tic-tac-toe game controlled by a smart phone through bluetooth. This time, I designed a phonegap app to control the game, instead of controlling it using lightBlue. Meanwhile, I added two characteristics for the bluetooth peripheral, which are both of type notification, one is responsible for telling the status of the game, and the other one tells the most recent moves of both the user and the computer. In summary, in this project, there is one service, called "TICTACTOE" with, four characteristics, "Move", "Start", "Staus" and "computerMove". *Note: meaning that there are new code created for both central device and the peripheral (arduino), and both are added to this repository!*
 The way to play the game is basically the same as playing it with the lightBlue application. The only difference is that this time there is no need to switch between the pages for different characteristics, since they are all combined in one page. Besides, the user experience should be way better since there are notifications telling the player how the game is going, and provides instructions and alerts when the player is not sure what to do.
 
-<img src="documentation/1.jpeg" alt="demo" width="200"/>
-<img src="documentation/2.jpeg" alt="2" width="200"/>
-<img src="documentation/3.jpeg" alt="3" width="200"/>
-
 ## Service, characteristics and UUIDs
 As mentioned above, the service, characteristics and UUIDs are as the following:
 - Service: TICTACTOE; UUID: FF20
@@ -32,3 +28,9 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 - Characteristic 4: ComputerMove; UUID: FF24
 	- Type: READ | Notify
 	- Description: Tells a user what the previous move of the computer was. *Note: the app also shows what the previous move of the player is, but that is handled by central completely.*
+
+## Pictures and screenshots
+<img src="documentation/1.jpeg" alt="demo" width="400"/>
+<img src="documentation/2.jpeg" alt="2" width="400"/>
+<img src="documentation/3.jpeg" alt="3" width="400"/>
+<img src="documentation/4.jpeg" alt="3" width="400"/>
