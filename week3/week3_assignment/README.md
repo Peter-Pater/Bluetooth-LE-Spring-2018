@@ -35,16 +35,7 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 	- Description: Tells a user what the previous move of the computer was. *Note: the app also shows what the previous move of the player is, but that is handled by central completely.*
 
 ## Pictures and screenshots
-*playing*
-<img src="documentation/1.PNG" alt="demo" width="400"/>
-*Basically the welcome page*
-<img src="documentation/3.jpeg" alt="3" width="400"/>
-*The page when the game is going*
-<img src="documentation/2.jpeg" alt="2" width="400"/>
-*An example of alert on invalid input*
-<img src="documentation/4.jpeg" alt="4" width="400"/>
-*An example of when the game ends*
-<img src="documentation/5.jpeg" alt="5" width="400"/>
+<img src="documentation/1.PNG" alt="demo" width="400"/><img src="documentation/3.jpeg" alt="3" width="400"/><img src="documentation/2.jpeg" alt="2" width="400"/><img src="documentation/4.jpeg" alt="4" width="400"/><img src="documentation/5.jpeg" alt="5" width="400"/>
 
 
 ## Some thoughts
