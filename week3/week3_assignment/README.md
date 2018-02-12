@@ -37,12 +37,16 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 ## Pictures and screenshots
 <img src="documentation/1.PNG" alt="demo" width="400"/>
 *playing*
+
 <img src="documentation/3.jpeg" alt="3" width="400"/>
 *Basically the welcome page*
+
 <img src="documentation/2.jpeg" alt="2" width="400"/>
 *The page when the game is going*
+
 <img src="documentation/4.jpeg" alt="4" width="400"/>
 *An example of alert on invalid input*
+
 <img src="documentation/5.jpeg" alt="5" width="400"/>
 *An example of when the game ends*
 
