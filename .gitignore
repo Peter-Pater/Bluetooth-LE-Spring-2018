@@ -1,5 +1,6 @@
 Material
 *.mp4
+*.MOV
 .DS_Store
 node_modules
 
