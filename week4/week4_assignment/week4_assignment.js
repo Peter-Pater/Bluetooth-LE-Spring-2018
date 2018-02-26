@@ -125,6 +125,7 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
             console.log();
             console.log(`<--------Computer moved to: ${(computerMove + 1).toString(16).toUpperCase()}-------->`);
             console.log();
+            // Add timeout to wait for the peripheral to send back status information
             setTimeout(ask, 1000);
         }
     });
