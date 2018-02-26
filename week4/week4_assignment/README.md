@@ -37,7 +37,11 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
 *Note: the app provides validation for each input of the moves. If a move is not valid on the given board or a move is conflicted with a previous move, then the user would be alerted and required to choose an alternative move.*
 
 ## Pictures and screenshots
+*regular interactions*
+
 <img src="documentation/1.PNG" alt="demo" width="600"/>
+
+*alert on invalid moves*
 
 <img src="documentation/2.PNG" alt="3" width="600"/>
 
