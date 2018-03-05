@@ -118,7 +118,7 @@ class StartCharacteristic extends bleno.Characteristic {
                 new bleno.Descriptor({
                     uuid: "2901",
                     value: "(Re)start"
-                });
+                })
             ]
         });
     }
@@ -162,7 +162,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                 new bleno.Descriptor({
                     uuid: "2901",
                     value: "Move"
-                });
+                })
             ]
         });
     }
