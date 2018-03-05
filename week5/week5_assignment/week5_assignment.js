@@ -300,7 +300,7 @@ const gameService = new bleno.PrimaryService({
 bleno.on('stateChange', state1 => {
     console.log('on -> stateChange: ' + state1);
     if (state1 === 'poweredOn') {
-        bleno.startAdvertising('TicTacToe', [gameService.uuid]);
+        bleno.startAdvertising('TICTACTOE', [gameService.uuid]);
         setup();
     } else {
         console.log("stopped");
