@@ -24,7 +24,7 @@ let lastComMove = 0x00;
 // initialize the peripheral
 function setup() {
     // light pins
-    const greenPins = [5, 27, 26, 4, 1, 13, 24, 18, 21];
+    const greenPins = [5, 27, 26, 3, 1, 13, 24, 18, 21];
     const yellowPins = [22, 17, 19, 16, 25, 6, 23, 14, 20];
     // setup
     for (let i = 0; i < 9; i++) {
