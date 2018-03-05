@@ -31,7 +31,9 @@ function setup() {
         // setup matrix
         matrix.push(0);
         // setup lights
+        console.log("setting green: ", i);
         greenLights[i] = new Gpio(greenPins[i], "out");
+        console.log("setting yellow: ", i);
         yellowLights[i] = new Gpio(yellowPins[i], "out");
     }
     console.log("matrix initialized: ", matrix);
