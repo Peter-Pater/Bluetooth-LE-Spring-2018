@@ -312,7 +312,10 @@ bleno.on('advertisingStart', error => {
 
 // cleanup GPIO on exit
 function exit() {
-    led.unexport();
+    for (let i = 0; i < 9; i++){
+        greenLights[i].unexport();
+        yellowLights[i].unexport();
+    }
     process.exit();
 }
 process.on('SIGINT', exit);
