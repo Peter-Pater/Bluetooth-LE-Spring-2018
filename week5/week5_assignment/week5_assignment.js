@@ -30,11 +30,11 @@ function setup() {
     for (let i = 0; i < 9; i++) {
         // setup matrix
         matrix.push(0);
-        console.log("matrix initialized: ", matrix);
         // setup lights
         greenLights[i] = new Gpio(greenPins[i], "out");
         yellowLights[i] = new Gpio(yellowPins[i], "out");
     }
+    console.log("matrix initialized: ", matrix);
 }
 
 class StatusCharacteristic extends bleno.Characteristic {
