@@ -1,5 +1,7 @@
 # Week5 Assignment - Bluetooth Controlled Tic-tac-toe (v4.0 Reimplement on Raspberry Pi)
 
+*Note: some testing pending, to be updated soon!*
+
 ## Introduction
 For this week's assignment, I basically reimplemented the previous Arduino based Tic-tac-toe peripheral on Raspberry Pi. The programming used is javascript on node.js, with the dependencies being bleno and GPIO. The reimplementation is mostly done on the code for the peripheral, instead of the central application. Therefore, the application is still the one from last week, v3.0, and the user interaction and terminal user interface stays basically the same. Meanwhile, note that I modified the wiring of the peripheral (for connecting to GPIO pins on raspberry pi), the specific pins are as the following:
 
