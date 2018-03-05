@@ -46,7 +46,7 @@ class StatusCharacteristic extends bleno.Characteristic {
                 new bleno.Descriptor({
                     uuid: "2901",
                     value: "Status"
-                });
+                })
             ]
         });
     }
@@ -82,7 +82,7 @@ class ComputerMoveCharacteristic extends bleno.Characteristic {
                 new bleno.Descriptor({
                     uuid: "2901",
                     value: "ComputerMove"
-                });
+                })
             ]
         });
     }
