@@ -190,7 +190,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     matrix[i] = 1;
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
-                    setTimeout(this.computerMove.bind(this, callback), 500);
+                    setTimeout(this.computerMove.bind(this), 500);
                     break;
                 }
             }
@@ -200,6 +200,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                 console.log("Invalid input!");
             }
         }
+        setTimeout(() => {callback(this.RESULT_SUCCESS);}, 1000);
     }
 
     computerMove() {
@@ -217,7 +218,6 @@ class MoveCharacteristic extends bleno.Characteristic {
                     console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
                     this.resultInspector(() => {
                         console.log("Waiting for player to move");
-                        callback(this.RESULT_SUCCESS);
                     });
                     break;
                 }
