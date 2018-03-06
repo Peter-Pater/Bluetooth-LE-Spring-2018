@@ -161,7 +161,7 @@ class StartCharacteristic extends bleno.Characteristic {
                         yellowLights[i].writeSync(0);
                     }
                     if (msg === 0){
-                        msg = 0;
+                        msg = 1;
                     }
                     clearInterval(lightDisplay);
                     callback(this.RESULT_SUCCESS);
