@@ -1,16 +1,19 @@
 # Week5 Assignment - Bluetooth Controlled Tic-tac-toe (v4.0 Reimplement on Raspberry Pi)
 
-*Note: some testing pending, to be updated soon!*
-
 ## Introduction
-For this week's assignment, I basically reimplemented the previous Arduino based Tic-tac-toe peripheral on Raspberry Pi. The programming used is javascript on node.js, with the dependencies being bleno and GPIO. The reimplementation is mostly done on the code for the peripheral, instead of the central application. Therefore, the application is still the one from last week, v3.0, and the user interaction and terminal user interface stays basically the same. Meanwhile, note that I modified the wiring of the peripheral (for connecting to GPIO pins on raspberry pi), the specific pins are as the following:
+For this week's assignment, I basically reimplemented the previous Arduino based Tic-tac-toe peripheral on Raspberry Pi. The programming used is javascript on node.js, with the dependencies being bleno and GPIO. The reimplementation is mostly done on the code for the peripheral, instead of the central application. Therefore, the application is still the one from last week, v3.0, with minor modifications, and the user interaction and terminal user interface stays basically the same.
 
-*green LEDs: [5, 27, 26, 3, 1, 13, 24, 18, 21]*
+Some modifications that I would like to point out are:
+- Added a new status 5: restart, so that a message of restarting would be send it and will be explicitly displayed on the central application
+- Adapted the wiring of the peripheral to the pins of GPIOs
+	- *green LEDs: [5, 27, 26, 3, 1, 13, 24, 18, 21]*
+	- *yellow LEDs: [22, 17, 19, 16, 25, 6, 23, 14, 20]*
+- Modified the scan process of the application, so that a user can have two options:
+	- Enter one or more device name, the application will choose the first hit among them
+	- Omit the device name, so that the application will choose the first fit of service uuid
+	- Reason: the way mac recognize raspberry Pi is strange. In my case, first it takes it as undefined, then after I pair it arbitrarily with the "undefined" raspberry Pi, my mac would then either recognize it as the local name, TICTACTOE, or the device name peterpi
 
-*yellow LEDs: [22, 17, 19, 16, 25, 6, 23, 14, 20]*
 *Also note that the code of the central application is also included in this folder*
-
-*Note: for more detailed playing instructions, please watch the demo video*
 
 ## Service, characteristics and UUIDs
 As mentioned above, the service, characteristics and UUIDs are as the following:
@@ -33,6 +36,7 @@ As mentioned above, the service, characteristics and UUIDs are as the following:
         - 2: Player wins;
         - 3: Computer wins;
         - 4: Draw;
+		- 5: Restart
 - Characteristic 4: ComputerMove; UUID: FF24
 	- Type: READ | Notify
 	- Description: Tells a user what the previous move of the computer was.
