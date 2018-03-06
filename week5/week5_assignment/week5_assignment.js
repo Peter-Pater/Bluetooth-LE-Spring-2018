@@ -193,7 +193,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     setTimeout(() => {
                         this.computerMove(() => {
                             callback(this.RESULT_SUCCESS);
-                        }).bind(this);
+                        })
                     }, 500);
                     break;
                 }
@@ -229,55 +229,17 @@ class MoveCharacteristic extends bleno.Characteristic {
         }
         callback();
     }
+}
 
-    resultInspector() {
-        // only active when state is in-game(1)
-        if (state == 1) {
-            // inspect lines
-            for (let i = 0; i < 7; i += 3) {
-                if (matrix[i] !== 0 && matrix[i] === matrix[i + 1] && matrix[i + 1] === matrix[i + 2]) {
-                    // game ends
-                    state = 0;
-                    if (matrix[i] === 1) {
-                        msg = 2;
-                        console.log("Player wins!");
-                    } else {
-                        msg = 3;
-                        console.log("Computer wins!");
-                    }
-                    return 1;
-                }
-            }
-            // inspect cols
-            for (let i = 0; i < 3; i++) {
-                if (matrix[i] !== 0 && matrix[i] === matrix[i + 3] && matrix[i + 3] === matrix[i + 6]) {
-                    // game ends
-                    state = 0;
-                    if (matrix[i] === 1) {
-                        msg = 2;
-                        console.log("Player wins!");
-                    } else {
-                        msg = 3;
-                        console.log("Computer wins!");
-                    }
-                    return 1;
-                }
-            }
-            // inspect diagnal
-            if (matrix[0] !== 0 && matrix[0] === matrix[4] && matrix[4] === matrix[8]) {
+function resultInspector() {
+    // only active when state is in-game(1)
+    if (state == 1) {
+        // inspect lines
+        for (let i = 0; i < 7; i += 3) {
+            if (matrix[i] !== 0 && matrix[i] === matrix[i + 1] && matrix[i + 1] === matrix[i + 2]) {
                 // game ends
                 state = 0;
-                if (matrix[0] === 1) {
-                    msg = 2;
-                    console.log("Player wins!");
-                } else {
-                    msg = 3;
-                    console.log("Computer wins!");
-                }
-                return;
-            } else if (matrix[2] !== 0 && matrix[2] === matrix[4] && matrix[4] === matrix[6]) {
-                state = 0;
-                if (matrix[2] === 1) {
+                if (matrix[i] === 1) {
                     msg = 2;
                     console.log("Player wins!");
                 } else {
@@ -286,19 +248,57 @@ class MoveCharacteristic extends bleno.Characteristic {
                 }
                 return 1;
             }
-            // if all filled, draw
-            for (let i = 0; i < 9; i++) {
-                if (matrix[i] == 0) {
-                    return 1;
-                }
-            }
-            msg = 4;
-            state = 0;
-            statusCharacteristic.setValue(msg);
-            Serial.println("Draw!");
-        } else {
-            return 0;
         }
+        // inspect cols
+        for (let i = 0; i < 3; i++) {
+            if (matrix[i] !== 0 && matrix[i] === matrix[i + 3] && matrix[i + 3] === matrix[i + 6]) {
+                // game ends
+                state = 0;
+                if (matrix[i] === 1) {
+                    msg = 2;
+                    console.log("Player wins!");
+                } else {
+                    msg = 3;
+                    console.log("Computer wins!");
+                }
+                return 1;
+            }
+        }
+        // inspect diagnal
+        if (matrix[0] !== 0 && matrix[0] === matrix[4] && matrix[4] === matrix[8]) {
+            // game ends
+            state = 0;
+            if (matrix[0] === 1) {
+                msg = 2;
+                console.log("Player wins!");
+            } else {
+                msg = 3;
+                console.log("Computer wins!");
+            }
+            return;
+        } else if (matrix[2] !== 0 && matrix[2] === matrix[4] && matrix[4] === matrix[6]) {
+            state = 0;
+            if (matrix[2] === 1) {
+                msg = 2;
+                console.log("Player wins!");
+            } else {
+                msg = 3;
+                console.log("Computer wins!");
+            }
+            return 1;
+        }
+        // if all filled, draw
+        for (let i = 0; i < 9; i++) {
+            if (matrix[i] == 0) {
+                return 1;
+            }
+        }
+        msg = 4;
+        state = 0;
+        statusCharacteristic.setValue(msg);
+        Serial.println("Draw!");
+    } else {
+        return 0;
     }
 }
 
