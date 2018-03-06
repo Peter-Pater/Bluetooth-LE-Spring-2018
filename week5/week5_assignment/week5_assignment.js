@@ -20,7 +20,6 @@ let lastMsg = -1;
 let comMove = 0;
 // last computer move
 let lastComMove = -1;
-var lightDisplay;
 
 // initialize the peripheral
 function setup() {
@@ -28,7 +27,7 @@ function setup() {
     // It turns out that the pins selected are relevant to the system,
     // they should not conflict a certain system functionality by occupying
     // all the pins reserved for them (such as clock)
-    const greenPins = [5, 27, 26, 3, 1, 13, 24, 18, 21];
+    const greenPins = [5, 27, 26, 5, 1, 13, 24, 18, 21];
     const yellowPins = [22, 17, 19, 16, 25, 6, 23, 14, 20];
     // setup
     for (let i = 0; i < 9; i++) {
@@ -139,8 +138,7 @@ class StartCharacteristic extends bleno.Characteristic {
         lastComMove = 0x00;
         // turn off, on, and then off all lights
         let index = 0;
-        setTimeout(() => {clearInterval(lightDisplay); console.log("cleared");}, 4000);
-        lightDisplay = setInterval(() => {
+        const lightDisplay = setInterval(() => {
             if (index === -1){
                 for (let i = 0; i < 9; i++){
                     greenLights[i].writeSync(0);
@@ -155,11 +153,12 @@ class StartCharacteristic extends bleno.Characteristic {
                 }
                 index++;
             }else{
-                console.log("still ticking");
                 for (let i = 0; i < 9; i++){
                     greenLights[i].writeSync(0);
                     yellowLights[i].writeSync(0);
                 }
+                clearInterval(lightDisplay);
+                callback(this.RESULT_SUCCESS);
             }
         }, 200);
 
@@ -199,6 +198,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                 console.log("Invalid input!");
             }
         }
+        callback(this.RESULT_SUCCESS);
     }
 
     computerMove() {
