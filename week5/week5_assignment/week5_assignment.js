@@ -41,12 +41,6 @@ function setup() {
     }
     console.log("matrix initialized: ", matrix);
 }
-// reset when game over
-function reset(){
-    for (let i = 0; i < 9; i++){
-        matrix[i] = 0;
-    }
-}
 
 class StatusCharacteristic extends bleno.Characteristic {
     constructor() {
@@ -166,7 +160,7 @@ class StartCharacteristic extends bleno.Characteristic {
                 clearInterval(lightDisplay);
                 callback(this.RESULT_SUCCESS);
             }
-        }, 200);
+        }, 100);
 
     }
 }
@@ -299,6 +293,13 @@ function resultInspector() {
         return 1;
     } else {
         return 0;
+    }
+}
+
+// reset when game over
+function reset(){
+    for (let i = 0; i < 9; i++){
+        matrix[i] = 0;
     }
 }
 

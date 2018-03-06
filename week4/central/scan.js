@@ -8,5 +8,5 @@ noble.on("stateChange", state => {
 });
 
 noble.on("discover", peripheral => {
-    console.log(`{id: ${peripheral.id}, address: ${peripheral.address}, RSSI: ${peripheral.rssi}, name: ${peripheral.advertisement.localName}}`);
+    console.log(`{id: ${peripheral.id}, address: ${peripheral.address}, RSSI: ${peripheral.rssi}, name: ${peripheral.advertisement.deviceName}}`);
 });
