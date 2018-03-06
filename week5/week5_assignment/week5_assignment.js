@@ -27,7 +27,7 @@ function setup() {
     // It turns out that the pins selected are relevant to the system,
     // they should not conflict a certain system functionality by occupying
     // all the pins reserved for them (such as clock)
-    const greenPins = [5, 27, 26, 19, 1, 13, 24, 18, 21];
+    const greenPins = [5, 27, 26, 10, 1, 13, 24, 18, 21];
     const yellowPins = [22, 17, 19, 16, 25, 6, 23, 12, 20];
     // setup
     for (let i = 0; i < 9; i++) {
