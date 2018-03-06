@@ -263,7 +263,7 @@ function resultInspector() {
                 msg = 3;
                 console.log("Computer wins!");
             }
-            return;
+            return 1;
         } else if (matrix[2] !== 0 && matrix[2] === matrix[4] && matrix[4] === matrix[6]) {
             state = 0;
             if (matrix[2] === 1) {
@@ -278,15 +278,15 @@ function resultInspector() {
         // if all filled, draw
         for (let i = 0; i < 9; i++) {
             if (matrix[i] == 0) {
-                return 1;
+                return 0;
             }
         }
         msg = 4;
         state = 0;
         statusCharacteristic.setValue(msg);
         Serial.println("Draw!");
+        return 1;
     } else {
-
         return 0;
     }
 }
