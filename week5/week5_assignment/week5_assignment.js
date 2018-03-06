@@ -217,12 +217,12 @@ class MoveCharacteristic extends bleno.Characteristic {
                     console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
                     this.resultInspector(() => {
                         console.log("Waiting for player to move");
+                        passedCallback(this.RESULT_SUCCESS);
                     });
                     break;
                 }
             }
         });
-        callback(this.RESULT_SUCCESS);
     }
 
     resultInspector(callback) {
