@@ -195,6 +195,7 @@ class StartCharacteristic extends bleno.Characteristic {
                 }
             }, 100);
         }
+        console.log(state);
     }
 }
 
@@ -214,6 +215,7 @@ class MoveCharacteristic extends bleno.Characteristic {
 
     onWriteRequest(data, offset, withoutResponse, callback) {
         console.log('write request: ' + data[0].toString(16).toUpperCase());
+        console.log(state);
         if (state === 1) {
             let i;
             for (i = 0; i < 9; i++) {

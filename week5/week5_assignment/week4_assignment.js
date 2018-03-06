@@ -147,7 +147,9 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
     function start(value){
         const buffer = new Buffer([0]);
         if (value === "Yes"){
-            // player quited
+            buffer[0] = 1;
+            startCharacteristic.write(buffer, false);
+        }else if(value === "Quit"){
             buffer[0] = 2;
             startCharacteristic.write(buffer, false);
         }
@@ -170,7 +172,9 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
                     start(answers.start);
                     break;
                 default:
-                    start("Yes");
+                    start("Quit");
+                    statusCharacteristic.unsubscribe();
+                    computerMoveCharacteristic.unsubscribe();
                     process.exit();
             }
         });
