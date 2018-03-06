@@ -191,8 +191,9 @@ class MoveCharacteristic extends bleno.Characteristic {
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
                     setTimeout(() => {
-                        this.computerMove.bind(this);
-                        callback(this.RESULT_SUCCESS);
+                        this.computerMove.bind(this, back = function(){
+                            callback(this.RESULT_SUCCESS);
+                        });
                     }, 500);
                     break;
                 }
@@ -206,7 +207,7 @@ class MoveCharacteristic extends bleno.Characteristic {
         }
     }
 
-    computerMove() {
+    computerMove(callback) {
         // the callback is responsible for actual computer move,
         // whether move or not is depend on the inspector, and node is non-blocking,
         // thus the callback
@@ -226,6 +227,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                 break;
             }
         }
+        callback();
     }
 
     resultInspector() {
