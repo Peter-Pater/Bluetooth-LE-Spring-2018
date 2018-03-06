@@ -41,6 +41,12 @@ function setup() {
     }
     console.log("matrix initialized: ", matrix);
 }
+// reset when game over
+function reset(){
+    for (let i = 0; i < 9; i++){
+        matrix[i] = 0;
+    }
+}
 
 class StatusCharacteristic extends bleno.Characteristic {
     constructor() {
@@ -234,6 +240,7 @@ function resultInspector() {
                     msg = 3;
                     console.log("Computer wins!");
                 }
+                reset();
                 return 1;
             }
         }
@@ -249,6 +256,7 @@ function resultInspector() {
                     msg = 3;
                     console.log("Computer wins!");
                 }
+                reset();
                 return 1;
             }
         }
@@ -263,6 +271,7 @@ function resultInspector() {
                 msg = 3;
                 console.log("Computer wins!");
             }
+            reset();
             return 1;
         } else if (matrix[2] !== 0 && matrix[2] === matrix[4] && matrix[4] === matrix[6]) {
             state = 0;
@@ -273,6 +282,7 @@ function resultInspector() {
                 msg = 3;
                 console.log("Computer wins!");
             }
+            reset();
             return 1;
         }
         // if all filled, draw
@@ -285,6 +295,7 @@ function resultInspector() {
         state = 0;
         statusCharacteristic.setValue(msg);
         Serial.println("Draw!");
+        reset();
         return 1;
     } else {
         return 0;
