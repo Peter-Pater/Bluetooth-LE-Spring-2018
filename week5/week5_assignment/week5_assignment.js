@@ -20,6 +20,7 @@ let lastMsg = -1;
 let comMove = 0;
 // last computer move
 let lastComMove = -1;
+var lightDisplay;
 
 // initialize the peripheral
 function setup() {
@@ -138,7 +139,7 @@ class StartCharacteristic extends bleno.Characteristic {
         lastComMove = 0x00;
         // turn off, on, and then off all lights
         let index = 0;
-        const lightDisplay = setInterval(() => {
+        lightDisplay = setInterval(() => {
             if (index === -1){
                 console.log("turnning off");
                 for (let i = 0; i < 9; i++){
@@ -161,6 +162,7 @@ class StartCharacteristic extends bleno.Characteristic {
                     yellowLights[i].writeSync(0);
                 }
                 clearInterval(lightDisplay);
+                lightDisplay = null;
             }
         }, 200);
 
