@@ -191,9 +191,9 @@ class MoveCharacteristic extends bleno.Characteristic {
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
                     setTimeout(() => {
-                        this.computerMove.bind(this, back = function(){
+                        this.computerMove(back = function(){
                             callback(this.RESULT_SUCCESS);
-                        });
+                        }).bind(this);
                     }, 500);
                     break;
                 }
