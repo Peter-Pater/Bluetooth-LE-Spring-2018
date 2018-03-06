@@ -131,6 +131,7 @@ class StartCharacteristic extends bleno.Characteristic {
     onWriteRequest(data, offset, withoutResponse, callback) {
         if (data[0] === 1){
             console.log("Game starts!");
+            reset();
             // in-game
             state = 1;
             // reset computer move
@@ -169,6 +170,7 @@ class StartCharacteristic extends bleno.Characteristic {
             }, 100);
         }else if (data[0] === 2){
             console.log("player quited");
+            reset();
             let index = -1;
             const lightDisplay = setInterval(() => {
                 if (index === -1){
@@ -271,7 +273,6 @@ function resultInspector() {
                     msg = 3;
                     console.log("Computer wins!");
                 }
-                reset();
                 return 1;
             }
         }
@@ -287,7 +288,6 @@ function resultInspector() {
                     msg = 3;
                     console.log("Computer wins!");
                 }
-                reset();
                 return 1;
             }
         }
@@ -302,7 +302,6 @@ function resultInspector() {
                 msg = 3;
                 console.log("Computer wins!");
             }
-            reset();
             return 1;
         } else if (matrix[2] !== 0 && matrix[2] === matrix[4] && matrix[4] === matrix[6]) {
             state = 0;
@@ -313,7 +312,6 @@ function resultInspector() {
                 msg = 3;
                 console.log("Computer wins!");
             }
-            reset();
             return 1;
         }
         // if all filled, draw
@@ -326,7 +324,6 @@ function resultInspector() {
         state = 0;
         statusCharacteristic.setValue(msg);
         Serial.println("Draw!");
-        reset();
         return 1;
     } else {
         return 0;
