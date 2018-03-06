@@ -189,7 +189,8 @@ class MoveCharacteristic extends bleno.Characteristic {
                     // I used a indexToPin mapper, but due to the redesign of the pin value array, there is no need here
                     matrix[i] = 1;
                     greenLights[i].writeSync(1);
-                    setTimeout(this.computerMove, 500);
+                    // the nightmare, bind this!
+                    setTimeout(this.computerMove.bind(this), 500);
                     break;
                 }
             }
@@ -207,7 +208,7 @@ class MoveCharacteristic extends bleno.Characteristic {
         // whether move or not is depend on the inspector, and node is non-blocking,
         // thus the callback
         // also, the arrow function is used to keep the "this" binding
-        resultInspector(() => {
+        this.resultInspector(() => {
             while (true) {
                 const pos = Math.floor(Math.random() * 9);
                 if (matrix[pos] === 0) {
@@ -215,7 +216,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     yellowLights[pos].writeSync(1);
                     comMove = values[pos];
                     console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
-                    resultInspector(() => {
+                    this.resultInspector(() => {
                         console.log("Waiting for player to move");
                     });
                     break;
