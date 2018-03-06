@@ -132,13 +132,15 @@ class StartCharacteristic extends bleno.Characteristic {
         if (data[0]){
             console.log("Game starts!");
             // in-game
-            msg = 1;
             state = 1;
             // reset computer move
             comMove = 0x00;
             lastComMove = 0x00;
             // turn off, on, and then off all lights
             let index = -1;
+            if (msg === 1){
+                msg = 0;
+            }
             const lightDisplay = setInterval(() => {
                 if (index === -1){
                     for (let i = 0; i < 9; i++){
@@ -157,6 +159,9 @@ class StartCharacteristic extends bleno.Characteristic {
                     for (let i = 0; i < 9; i++){
                         greenLights[i].writeSync(0);
                         yellowLights[i].writeSync(0);
+                    }
+                    if (msg === 0){
+                        msg = 0;
                     }
                     clearInterval(lightDisplay);
                     callback(this.RESULT_SUCCESS);
