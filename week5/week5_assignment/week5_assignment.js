@@ -191,9 +191,22 @@ class MoveCharacteristic extends bleno.Characteristic {
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
                     setTimeout(() => {
-                        this.computerMove(() => {
-                            callback(this.RESULT_SUCCESS);
-                        })
+                        if (resultInspector()){
+                            return;
+                        }
+                        console.log("computer moving");
+                        while (true) {
+                            const pos = Math.floor(Math.random() * 9);
+                            if (matrix[pos] === 0) {
+                                matrix[pos] = 2;
+                                yellowLights[pos].writeSync(1);
+                                comMove = values[pos];
+                                console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
+                                resultInspector();
+                                callback(this.RESULT_SUCCESS);
+                                break;
+                            }
+                        }
                     }, 500);
                     break;
                 }
@@ -202,32 +215,9 @@ class MoveCharacteristic extends bleno.Characteristic {
                 // the input is invalid since we went through the entire array without a hit
                 // should not happen since handled in computer app
                 console.log("Invalid input!");
-                callback(this.RESULT_SUCCESS);
-            }
-        }
-    }
 
-    computerMove(callback) {
-        // the callback is responsible for actual computer move,
-        // whether move or not is depend on the inspector, and node is non-blocking,
-        // thus the callback
-        // also, the arrow function is used to keep the "this" binding
-        if (resultInspector()){
-            return;
-        }
-        console.log("computer moving");
-        while (true) {
-            const pos = Math.floor(Math.random() * 9);
-            if (matrix[pos] === 0) {
-                matrix[pos] = 2;
-                yellowLights[pos].writeSync(1);
-                comMove = values[pos];
-                console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
-                resultInspector();
-                break;
             }
         }
-        callback();
     }
 }
 
