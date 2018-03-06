@@ -188,7 +188,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     // I used a indexToPin mapper, but due to the redesign of the pin value array, there is no need here
                     matrix[i] = 1;
                     greenLights[i].writeSync(1);
-                    setTimeout(this.comptuerMove, 500);
+                    setTimeout(this.computerMove, 500);
                     break;
                 }
             }
