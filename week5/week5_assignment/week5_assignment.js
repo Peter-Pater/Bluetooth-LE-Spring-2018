@@ -189,25 +189,8 @@ class MoveCharacteristic extends bleno.Characteristic {
                     // I used a indexToPin mapper, but due to the redesign of the pin value array, there is no need here
                     matrix[i] = 1;
                     greenLights[i].writeSync(1);
-                    // the nightmare, bind this!
-                    setTimeout(() => {
-                        if (resultInspector()){
-                            return;
-                        }
-                        console.log("computer moving");
-                        while (true) {
-                            const pos = Math.floor(Math.random() * 9);
-                            if (matrix[pos] === 0) {
-                                matrix[pos] = 2;
-                                yellowLights[pos].writeSync(1);
-                                comMove = values[pos];
-                                console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
-                                resultInspector();
-                                callback(this.RESULT_SUCCESS);
-                                break;
-                            }
-                        }
-                    }, 500);
+                    computerMove();
+                    callback(this.RESULT_SUCCESS);
                     break;
                 }
             }
@@ -215,10 +198,31 @@ class MoveCharacteristic extends bleno.Characteristic {
                 // the input is invalid since we went through the entire array without a hit
                 // should not happen since handled in computer app
                 console.log("Invalid input!");
-
+                callback(this.RESULT_SUCCESS);
             }
         }
     }
+}
+
+function computerMove(){
+    setTimeout(() => {
+        if (resultInspector()){
+            return;
+        }else{
+            console.log("computer moving");
+            while (true) {
+                const pos = Math.floor(Math.random() * 9);
+                if (matrix[pos] === 0) {
+                    matrix[pos] = 2;
+                    yellowLights[pos].writeSync(1);
+                    comMove = values[pos];
+                    console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
+                    resultInspector();
+                    break;
+                }
+            }
+        }
+    }, 500);
 }
 
 function resultInspector() {
