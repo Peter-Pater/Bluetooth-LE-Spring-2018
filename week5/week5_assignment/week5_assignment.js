@@ -215,8 +215,8 @@ class MoveCharacteristic extends bleno.Characteristic {
                 console.log("Invalid input!");
             }
         }
+        callback(this.RESULT_SUCCESS);
     }
-    callback(this.RESULT_SUCCESS);
 }
 
 function resultInspector() {
