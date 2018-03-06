@@ -169,6 +169,7 @@ class StartCharacteristic extends bleno.Characteristic {
             }, 100);
         }else if (data[0] === 2){
             console.log("player quited");
+            let index = -1;
             const lightDisplay = setInterval(() => {
                 if (index === -1){
                     for (let i = 0; i < 9; i++){
