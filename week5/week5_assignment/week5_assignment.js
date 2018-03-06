@@ -180,10 +180,10 @@ class MoveCharacteristic extends bleno.Characteristic {
     }
 
     onWriteRequest(data, offset, withoutResponse, callback) {
-        console.log('write request: ' + data.toString(16).toUpperCase());
+        console.log('write request: ' + data[0].toString(16).toUpperCase());
         if (state === 1) {
             for (let i = 0; i < 9; i++) {
-                if (data === values[i] && matrix[i] === 0) {
+                if (data[0] === values[i] && matrix[i] === 0) {
                     // the input is valid, move
                     // I used a indexToPin mapper, but due to the redesign of the pin value array, there is no need here
                     matrix[i] = 1;
