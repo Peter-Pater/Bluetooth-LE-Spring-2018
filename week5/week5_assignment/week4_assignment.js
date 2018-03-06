@@ -112,6 +112,11 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
                 console.log();
                 ask();
                 break;
+            case 5:
+                state = 1;
+                console.log();
+                console.log("<--------Restarting...-------->");
+                console.log();
             default:
                 // only for debugging
                 console.log();

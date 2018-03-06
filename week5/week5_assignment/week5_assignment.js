@@ -11,7 +11,7 @@ const values = [0xA0, 0xA1, 0xA2, 0xB0, 0xB1, 0xB2, 0xC0, 0xC1, 0xC2];
 const greenLights = new Array(9);
 const yellowLights = new Array(9);
 // status
-let state = 0; // 0 being standing-by, 1 being in-game, 2 being player win, 3 being computer win, 4 being draw
+let state = 0; // 0 being standing-by, 1 being in-game, 2 being player win, 3 being computer win, 4 being draw, 5 being restarting
 // msg to notify
 let msg = 0;
 // last msg
@@ -139,7 +139,7 @@ class StartCharacteristic extends bleno.Characteristic {
             // turn off, on, and then off all lights
             let index = -1;
             if (msg === 1){
-                msg = 0;
+                msg = 5;
             }
             const lightDisplay = setInterval(() => {
                 if (index === -1){
@@ -160,7 +160,7 @@ class StartCharacteristic extends bleno.Characteristic {
                         greenLights[i].writeSync(0);
                         yellowLights[i].writeSync(0);
                     }
-                    if (msg === 0){
+                    if (msg !== 1){
                         msg = 1;
                     }
                     clearInterval(lightDisplay);
