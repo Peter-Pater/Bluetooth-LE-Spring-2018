@@ -190,7 +190,10 @@ class MoveCharacteristic extends bleno.Characteristic {
                     matrix[i] = 1;
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
-                    setTimeout(this.computerMove.bind(this), 500);
+                    setTimeout(() => {
+                        this.computerMove();
+                        callback(this.RESULT_SUCCESS);
+                    }, 500);
                     break;
                 }
             }
@@ -198,9 +201,9 @@ class MoveCharacteristic extends bleno.Characteristic {
                 // the input is invalid since we went through the entire array without a hit
                 // should not happen since handled in computer app
                 console.log("Invalid input!");
+                callback(this.RESULT_SUCCESS);
             }
         }
-        setTimeout(() => {callback(this.RESULT_SUCCESS);}, 1000);
     }
 
     computerMove() {
@@ -208,24 +211,24 @@ class MoveCharacteristic extends bleno.Characteristic {
         // whether move or not is depend on the inspector, and node is non-blocking,
         // thus the callback
         // also, the arrow function is used to keep the "this" binding
-        this.resultInspector(() => {
-            while (true) {
-                const pos = Math.floor(Math.random() * 9);
-                if (matrix[pos] === 0) {
-                    matrix[pos] = 2;
-                    yellowLights[pos].writeSync(1);
-                    comMove = values[pos];
-                    console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
-                    this.resultInspector(() => {
-                        console.log("Waiting for player to move");
-                    });
-                    break;
-                }
+        if (resultInspector()){
+            return;
+        }
+        console.log("computer moving");
+        while (true) {
+            const pos = Math.floor(Math.random() * 9);
+            if (matrix[pos] === 0) {
+                matrix[pos] = 2;
+                yellowLights[pos].writeSync(1);
+                comMove = values[pos];
+                console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
+                resultInspector();
+                break;
             }
-        });
+        }
     }
 
-    resultInspector(callback) {
+    resultInspector() {
         // only active when state is in-game(1)
         if (state == 1) {
             // inspect lines
@@ -240,7 +243,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                         msg = 3;
                         console.log("Computer wins!");
                     }
-                    return;
+                    return 1;
                 }
             }
             // inspect cols
@@ -255,7 +258,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                         msg = 3;
                         console.log("Computer wins!");
                     }
-                    return;
+                    return 1;
                 }
             }
             // inspect diagnal
@@ -279,12 +282,12 @@ class MoveCharacteristic extends bleno.Characteristic {
                     msg = 3;
                     console.log("Computer wins!");
                 }
-                return;
+                return 1;
             }
             // if all filled, draw
             for (let i = 0; i < 9; i++) {
                 if (matrix[i] == 0) {
-                    return;
+                    return 1;
                 }
             }
             msg = 4;
@@ -292,7 +295,7 @@ class MoveCharacteristic extends bleno.Characteristic {
             statusCharacteristic.setValue(msg);
             Serial.println("Draw!");
         } else {
-            callback();
+            return 0;
         }
     }
 }
