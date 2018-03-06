@@ -197,7 +197,6 @@ class StartCharacteristic extends bleno.Characteristic {
                 }
             }, 100);
         }
-        console.log(state);
     }
 }
 
@@ -217,12 +216,9 @@ class MoveCharacteristic extends bleno.Characteristic {
 
     onWriteRequest(data, offset, withoutResponse, callback) {
         console.log('write request: ' + data[0].toString(16).toUpperCase());
-        console.log(state);
         if (state === 1) {
-            console.log("here");
             let i;
             for (i = 0; i < 9; i++) {
-                console.log("here?");
                 if (data[0] === values[i] && matrix[i] === 0) {
                     // the input is valid, move
                     // I used a indexToPin mapper, but due to the redesign of the pin value array, there is no need here
