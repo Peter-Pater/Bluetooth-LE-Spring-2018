@@ -129,39 +129,40 @@ class StartCharacteristic extends bleno.Characteristic {
     }
 
     onWriteRequest(data, offset, withoutResponse, callback) {
-        console.log("Game starts!");
-        // in-game
-        msg = 1;
-        state = 1;
-        // reset computer move
-        comMove = 0x00;
-        lastComMove = 0x00;
-        // turn off, on, and then off all lights
-        let index = -1;
-        const lightDisplay = setInterval(() => {
-            if (index === -1){
-                for (let i = 0; i < 9; i++){
-                    greenLights[i].writeSync(0);
-                    yellowLights[i].writeSync(0);
-                }
-                index++;
-            }else if (index < 18 && index > -1){
-                if (index % 2 === 0){
-                    greenLights[index/2].writeSync(1);
+        if (data[0]){
+            console.log("Game starts!");
+            // in-game
+            msg = 1;
+            state = 1;
+            // reset computer move
+            comMove = 0x00;
+            lastComMove = 0x00;
+            // turn off, on, and then off all lights
+            let index = -1;
+            const lightDisplay = setInterval(() => {
+                if (index === -1){
+                    for (let i = 0; i < 9; i++){
+                        greenLights[i].writeSync(0);
+                        yellowLights[i].writeSync(0);
+                    }
+                    index++;
+                }else if (index < 18 && index > -1){
+                    if (index % 2 === 0){
+                        greenLights[index/2].writeSync(1);
+                    }else{
+                        yellowLights[(index - 1)/2].writeSync(1)
+                    }
+                    index++;
                 }else{
-                    yellowLights[(index - 1)/2].writeSync(1)
+                    for (let i = 0; i < 9; i++){
+                        greenLights[i].writeSync(0);
+                        yellowLights[i].writeSync(0);
+                    }
+                    clearInterval(lightDisplay);
+                    callback(this.RESULT_SUCCESS);
                 }
-                index++;
-            }else{
-                for (let i = 0; i < 9; i++){
-                    greenLights[i].writeSync(0);
-                    yellowLights[i].writeSync(0);
-                }
-                clearInterval(lightDisplay);
-                callback(this.RESULT_SUCCESS);
-            }
-        }, 100);
-
+            }, 100);
+        }
     }
 }
 

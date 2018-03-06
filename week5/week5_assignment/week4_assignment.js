@@ -1,7 +1,7 @@
 const noble = require("noble");
 const inquirer = require("inquirer");
 // get the device name from commandline, in this case, TICTACTOE
-const deviceName = process.argv[2];
+const deviceName = process.argv.splice(2);
 
 const GAME_SERVICE_UUID = 'ff20';
 const MOVE_CHARACTERISTIC_UUID = 'ff21';
@@ -14,10 +14,10 @@ let state = 0;
 const validMoves = [0xA0, 0xA1, 0xA2, 0xB0, 0xB1, 0xB2, 0xC0, 0xC1, 0xC2];
 let moved = [];
 
-if (!deviceName) {
-  console.warn('WARNING: No device name specified. Will not connect.');
+if (deviceName.length === 0) {
+  console.warn('WARNING: No device name specified. Will connect to the first one that fits.');
 } else {
-  console.log(`Looking for a device named ${deviceName}`);
+  console.log(`Looking for a device has a name among ${deviceName}`);
 }
 
 noble.on('stateChange', state => {
@@ -31,12 +31,18 @@ noble.on('stateChange', state => {
 
 noble.on('discover', peripheral => {
     const name = peripheral.advertisement.localName;
-    if (name === deviceName) {
+    if (deviceName.length === 0){
         console.log(`Connecting to '${name}' ${peripheral.id}`);
         noble.stopScanning();
         connectAndSetUp(peripheral);
-    } else {
-        console.log(`Skipping '${name}' ${peripheral.id}`);
+    }else{
+        if (deviceName.indexOf(name) > -1) {
+            console.log(`Connecting to '${name}' ${peripheral.id}`);
+            noble.stopScanning();
+            connectAndSetUp(peripheral);
+        } else {
+            console.log(`Skipping '${name}' ${peripheral.id}`);
+        }
     }
 });
 
@@ -68,9 +74,7 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
     const statusCharacteristic = characteristics[2];
     const computerMoveCharacteristic = characteristics[3];
 
-    statusCharacteristic.read();
     statusCharacteristic.subscribe();
-    computerMoveCharacteristic.read();
     computerMoveCharacteristic.subscribe();
     statusCharacteristic.on("data", (data, isNotification) => {
         switch(data.readIntLE(0)){
