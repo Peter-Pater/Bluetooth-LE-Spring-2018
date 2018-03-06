@@ -117,6 +117,7 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
                 console.log();
                 console.log("<--------Restarting...-------->");
                 console.log();
+                break;
             default:
                 // only for debugging
                 console.log();
@@ -146,7 +147,8 @@ function onServicesAndCharacteristicsDiscovered(error, services, characteristics
     function start(value){
         const buffer = new Buffer([0]);
         if (value === "Yes"){
-            buffer[0] = 1;
+            // player quited
+            buffer[0] = 2;
             startCharacteristic.write(buffer, false);
         }
     }

@@ -129,7 +129,7 @@ class StartCharacteristic extends bleno.Characteristic {
     }
 
     onWriteRequest(data, offset, withoutResponse, callback) {
-        if (data[0]){
+        if (data[0] === 1){
             console.log("Game starts!");
             // in-game
             state = 1;
@@ -165,6 +165,33 @@ class StartCharacteristic extends bleno.Characteristic {
                     }
                     clearInterval(lightDisplay);
                     callback(this.RESULT_SUCCESS);
+                }
+            }, 100);
+        }else if (data[0] === 2){
+            console.log("player quited");
+            const lightDisplay = setInterval(() => {
+                if (index === -1){
+                    for (let i = 0; i < 9; i++){
+                        greenLights[i].writeSync(0);
+                        yellowLights[i].writeSync(0);
+                    }
+                    index++;
+                }else if (index < 18 && index > -1){
+                    if (index % 2 === 0){
+                        greenLights[index/2].writeSync(1);
+                    }else{
+                        yellowLights[(index - 1)/2].writeSync(1)
+                    }
+                    index++;
+                }else{
+                    for (let i = 0; i < 9; i++){
+                        greenLights[i].writeSync(0);
+                        yellowLights[i].writeSync(0);
+                    }
+                    msg = 0;
+                    clearInterval(lightDisplay);
+                    callback(this.RESULT_SUCCESS);
+                    exit();
                 }
             }, 100);
         }
