@@ -198,7 +198,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                             const pos = Math.floor(Math.random() * 9);
                             if (matrix[pos] === 0) {
                                 matrix[pos] = 2;
-                                yellowLights[pos].writeSync(1);
+                                setTimeout(() => {yellowLights[pos].writeSync(1);}, 500);
                                 comMove = values[pos];
                                 console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
                                 resultInspector();
