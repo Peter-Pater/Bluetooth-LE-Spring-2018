@@ -136,25 +136,25 @@ class StartCharacteristic extends bleno.Characteristic {
         // reset computer move
         comMove = 0x00;
         lastComMove = 0x00;
-        // turn off all lights
-        for (let i = 0; i < 9; i++) {
-            greenLights[i].writeSync(0);
-            yellowLights[i].writeSync(0);
-        }
-        // light through
-        for (let i = 0; i < 9; i++) {
-            setTimeout(() => {
-                greenLights[i].writeSync(1);
-                setTimeout(() => {
+        // turn off, on, and then off all lights
+        for (let i = 1; i <= 36; i++){
+            if (i <= 18){
+                if (i % 2 !== 0){
+                    greenLights[i].writeSync(1);
+                }else{
                     yellowLights[i].writeSync(1);
-                }, 500);
-            }, 500);
+                }
+            }
+            if (i > 18){
+                const j = i - 18;
+                if (j % 2 !== 0){
+                    greenLights[j].writeSync(0);
+                }else{
+                    yellowLights[j].writeSync(0);
+                }
+            }
         }
-        // turn off again
-        for (let i = 0; i < 9; i++) {
-            greenLights[i].writeSync(0);
-            yellowLights[i].writeSync(0);
-        }
+
     }
 }
 
