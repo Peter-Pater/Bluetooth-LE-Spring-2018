@@ -192,7 +192,6 @@ class StartCharacteristic extends bleno.Characteristic {
                     msg = 0;
                     clearInterval(lightDisplay);
                     callback(this.RESULT_SUCCESS);
-                    exit();
                 }
             }, 100);
         }
