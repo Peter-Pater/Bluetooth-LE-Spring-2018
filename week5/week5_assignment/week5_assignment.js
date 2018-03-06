@@ -191,7 +191,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
                     setTimeout(() => {
-                        this.computerMove();
+                        this.computerMove().bind(this);
                         callback(this.RESULT_SUCCESS);
                     }, 500);
                     break;
@@ -211,7 +211,7 @@ class MoveCharacteristic extends bleno.Characteristic {
         // whether move or not is depend on the inspector, and node is non-blocking,
         // thus the callback
         // also, the arrow function is used to keep the "this" binding
-        if (resultInspector()){
+        if (this.resultInspector()){
             return;
         }
         console.log("computer moving");
