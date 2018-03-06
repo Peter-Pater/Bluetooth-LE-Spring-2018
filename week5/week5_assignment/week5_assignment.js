@@ -207,7 +207,7 @@ class MoveCharacteristic extends bleno.Characteristic {
         // whether move or not is depend on the inspector, and node is non-blocking,
         // thus the callback
         // also, the arrow function is used to keep the "this" binding
-        this.resultInspector(() => {
+        resultInspector(() => {
             while (true) {
                 const pos = Math.floor(Math.random() * 9);
                 if (matrix[pos] === 0) {
@@ -215,7 +215,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     yellowLights[pos].writeSync(1);
                     comMove = values[pos];
                     console.log("Computer moved: ", values[pos].toString(16).toUpperCase());
-                    this.resultInspector(() => {
+                    resultInspector(() => {
                         console.log("Waiting for player to move");
                     });
                     break;
