@@ -138,7 +138,7 @@ class StartCharacteristic extends bleno.Characteristic {
         lastComMove = 0x00;
         // turn off, on, and then off all lights
         let index = 0;
-        const lightDisplay = setInterval(() => function(){
+        const lightDisplay = setInterval(() => {
             if (index === -1){
                 console.log("turnning off");
                 for (let i = 0; i < 9; i++){
