@@ -137,7 +137,7 @@ class StartCharacteristic extends bleno.Characteristic {
         comMove = 0x00;
         lastComMove = 0x00;
         // turn off, on, and then off all lights
-        let index = 0;
+        let index = -1;
         const lightDisplay = setInterval(() => {
             if (index === -1){
                 for (let i = 0; i < 9; i++){
@@ -190,7 +190,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                     matrix[i] = 1;
                     greenLights[i].writeSync(1);
                     // the nightmare, bind this!
-                    setTimeout(this.computerMove.bind(this), 500);
+                    setTimeout(this.computerMove(callback).bind(this), 500);
                     break;
                 }
             }
@@ -200,10 +200,9 @@ class MoveCharacteristic extends bleno.Characteristic {
                 console.log("Invalid input!");
             }
         }
-        callback(this.RESULT_SUCCESS);
     }
 
-    computerMove() {
+    computerMove(passedCallback) {
         // the callback is responsible for actual computer move,
         // whether move or not is depend on the inspector, and node is non-blocking,
         // thus the callback
@@ -223,6 +222,7 @@ class MoveCharacteristic extends bleno.Characteristic {
                 }
             }
         });
+        callback(this.RESULT_SUCCESS);
     }
 
     resultInspector(callback) {
