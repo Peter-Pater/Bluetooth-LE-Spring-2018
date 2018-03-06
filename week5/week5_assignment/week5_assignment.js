@@ -206,7 +206,6 @@ class MoveCharacteristic extends bleno.Characteristic {
                             }
                         }
                     }
-                    callback(this.RESULT_SUCCESS);
                     break;
                 }
             }
@@ -214,10 +213,10 @@ class MoveCharacteristic extends bleno.Characteristic {
                 // the input is invalid since we went through the entire array without a hit
                 // should not happen since handled in computer app
                 console.log("Invalid input!");
-                callback(this.RESULT_SUCCESS);
             }
         }
     }
+    callback(this.RESULT_SUCCESS);
 }
 
 function resultInspector() {
@@ -287,6 +286,7 @@ function resultInspector() {
         statusCharacteristic.setValue(msg);
         Serial.println("Draw!");
     } else {
+
         return 0;
     }
 }
