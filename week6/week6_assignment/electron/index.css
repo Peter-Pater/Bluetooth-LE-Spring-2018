@@ -1,0 +1,52 @@
+body{
+    background-color: azure;
+    text-align: center;
+}
+
+#startPage{
+    margin-top: 23%;
+    /* display: none; */
+}
+
+#gamePage{
+    margin-top: 5%;
+    display: none;
+}
+
+#gamePage h1{
+    margin-bottom: 3%;
+}
+
+#grid{
+    display: inline-block;
+    height: 400px;
+    width: 400px;
+}
+
+.element{
+    display: inline-block;
+    height: 31%;
+    width: 31%;
+    border-style: solid;
+    border-width: thin;
+}
+
+button{
+    font-size: 20pt;
+}
+
+#startButton{
+    margin-top: 3%;
+}
+
+#status{
+    font-style: italic;
+}
+
+.circle{
+    position: absolute;
+}
+
+.cross{
+    position: absolute;
+}

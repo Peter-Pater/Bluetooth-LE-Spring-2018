@@ -1,0 +1,19 @@
+{
+  "name": "electron-led",
+  "version": "1.0.0",
+  "description": "Control LED via Bluetooth",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "electron-rebuild": "electron-rebuild"
+  },
+  "author": "Don Coleman",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "electron": "",
+    "electron-rebuild": ""
+  },
+  "dependencies": {
+    "noble": "^1.9.0"
+  }
+}
