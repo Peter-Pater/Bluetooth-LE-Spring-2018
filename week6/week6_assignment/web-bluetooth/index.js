@@ -123,6 +123,7 @@ function onEnterButtonClick() {
                     case startCharacteristicUuid:
                         log('Start Characteristic');
                         startCharacteristic = c;
+                        startCharacteristic.writeValue(new Uint8Array([1]));
                         break;
 
                     case statusCharacteristicUuid:
@@ -141,7 +142,6 @@ function onEnterButtonClick() {
                             log("ComputerMove Notifications started");
                         });
                         computerMoveCharacteristic.addEventListener("characteristicvaluechanged", computerMoveCharacteristicChanged);
-                        document.querySelector("#startButton").click();
                         break;
 
                     default:
